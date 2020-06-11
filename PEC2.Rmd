@@ -460,7 +460,7 @@ Los archivos guardados incluyen los genes ordenados según su p-valor. Se incluy
 
 # Enrichment Analysis
 
-Una vez tenemos los genes anotados, procedemos a la visualización de los resultados de la expresión diferencial obtenidos. En este informe se muestran varios ejemplos de visualización. Para mostrar una visión general de la expresión diferencial se realiza un `volcano plot` para cada una de las comparaciones (Figura  \@ref(fig:volcanos) ).
+Una vez tenemos los genes anotados, procedemos a la visualización de los resultados de la expresión diferencial obtenidos. En este informe se muestran varios ejemplos de visualización. Para mostrar una visión general de la expresión diferencial se realiza un `volcano plot` para cada una de las comparaciones.
 
 
 
@@ -480,9 +480,6 @@ with(subset(ressnOrdered, padj<.1 ), points(-log10(pvalue), pch=20, col="red"))
 dev.off()
 ```
 
-
-
-## Importancia biológica
 
 Por último, para ayudar a interpretar la importancia biológica de los resultados del experimento, se realizó un test `enrichgo` (`Gene  Enrichment Analysis`) mediante el paquete `clusterProfiler` [@clusterprofiler] .  Para representar los resultados de este test, se han utilizado diagramas de barras mediante la función `barplot`, un diagrama en forma de red especificando qué genes son los que actúan mediante la función `cnetplot` y un gráfico `emapplot`.  Se han calculado los resultados para las ontologías `BP`(Biological Process), `CC`(Cellular Component) y `MF` (Molecular Function), para tener una visión más general de la importancia biológica de los resultados.  El criterio de selección de genes diferencialmente expresados ha sido un p-valor ajustado menor de 0.05. Se seleccionan todos los genes que tienen al menos una anotación en la base de datos GO.
 
@@ -724,7 +721,7 @@ nrow(Tab.react2)
 nrow(Tab.react3)
 ```
 
-Para la comparación EvsN, se han encontrado `r nrow(Tab.react1)` procesos biológicos mediante el análisis de "enrichGO", mientras que para EvsS se han encontrado `r nrow(Tab.react2)` y para SvsN `r nrow(Tab.react2)`. Es interesante observar que, aunque la diferencia en el número de procesos biológicos señalados por el análisis es notable entre las comparaciones, en las primeras posiciones comparten la activación de las células T y la regulación de la activación de los linfocitos. En cambio, sólo la comparación EvsN presenta en las primeras posiciones el procesamiento del antígeno (Cuadros 1, 2 y 3).
+Para la comparación EvsN, se han encontrado `r nrow(Tab.react1)` procesos biológicos mediante el análisis de "enrichGO", mientras que para EvsS se han encontrado `r nrow(Tab.react2)` y para SvsN `r nrow(Tab.react3)`. Es interesante observar que, aunque la diferencia en el número de procesos biológicos señalados por el análisis es notable entre las comparaciones, en las primeras posiciones comparten la activación de las células T y la regulación de la activación de los linfocitos. En cambio, sólo la comparación SvsN presenta en las primeras posiciones la activación y proliferación de células B (Cuadros 1, 2 y 3).
 ```{r}
 install.packages("kableExtra")
 ```
@@ -732,21 +729,21 @@ install.packages("kableExtra")
 ```{r tableReacto, echo=FALSE, fig.pos="H"}
 
 library(kableExtra)
-Tab.react1 <- Tab.react1[1:4, 1:5]
+Tab.react1 <- Tab.react1[1:4, 1:4]
 knitr::kable(Tab.react1, booktabs = TRUE, caption = "Primeras filas y columnas de resultados de enrichGO para la comparación EvsN")%>%
   kable_styling(latex_options = "hold_position")
 
 ```
 ```{r tableReacto2, echo=FALSE, fig.pos="H"}
 
-Tab.react2 <- Tab.react2[1:4, 1:5]
+Tab.react2 <- Tab.react2[1:4, 1:4]
 knitr::kable(Tab.react2, booktabs = TRUE, caption = "Primeras filas y columnas de resultados de enrichGO para la comparación EvsS")%>%
   kable_styling(latex_options = "hold_position")
 
 ```
 ```{r tableReacto3, echo=FALSE, fig.pos="H"}
 
-Tab.react3 <- Tab.react3[1:4, 1:5]
+Tab.react3 <- Tab.react3[1:4, 1:4]
 knitr::kable(Tab.react3, booktabs = TRUE, caption = "Primeras filas y columnas de resultados de enrichGO para la comparación SvsN")%>%
   kable_styling(latex_options = "hold_position")
 
@@ -754,6 +751,8 @@ knitr::kable(Tab.react3, booktabs = TRUE, caption = "Primeras filas y columnas d
 
 # Comentarios
 
-Se aconseja realizar una pregunta más concreta a la hora de solicitar el análisis de los dato. Ésto puede ayudar a elaborar un informe más preciso y relevante. Para una solicitud de hallar diferencias en comparaciones, sin más detalle, se hace difícil afinar sobre todo a la hora de definir umbrales de selección, y de decidir qué es importante y qué no para el estudio de referencia. 
+En el caso de que las infiltraciones NIT, SFI Y ELI fuesen pasos sucesivos dentro de un mismo proceso, los resultados parecen indicar que entre NIT y SFI se produce la proliferación de las células B, mientras que una vez llegados a un estado ELI hay activación de células T y  diferenciación de linfocitos. 
+
+Se aconseja realizar una pregunta más concreta a la hora de solicitar el análisis de los datos. Ésto puede ayudar a elaborar un informe más preciso y relevante. Para una solicitud de hallar diferencias en comparaciones, sin más detalle, se hace difícil afinar sobre todo a la hora de definir umbrales de selección, y de decidir qué es importante y qué no para el estudio de referencia. 
  
 # Bibliografía
