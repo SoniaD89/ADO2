@@ -753,6 +753,8 @@ knitr::kable(Tab.react3, booktabs = TRUE, caption = "Primeras filas y columnas d
 
 En el caso de que las infiltraciones NIT, SFI Y ELI fuesen pasos sucesivos dentro de un mismo proceso, los resultados parecen indicar que entre NIT y SFI se produce la proliferación de las células B, mientras que una vez llegados a un estado ELI hay activación de células T y  diferenciación de linfocitos. 
 
+Se recomienda aumentar el número de muestras ELI.
+
 Se aconseja realizar una pregunta más concreta a la hora de solicitar el análisis de los datos. Ésto puede ayudar a elaborar un informe más preciso y relevante. Para una solicitud de hallar diferencias en comparaciones, sin más detalle, se hace difícil afinar sobre todo a la hora de definir umbrales de selección, y de decidir qué es importante y qué no para el estudio de referencia. 
  
 # Bibliografía
