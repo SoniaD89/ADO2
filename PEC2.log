@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.3)  11 JUN 2020 19:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.3)  11 JUN 2020 21:33
 entering extended mode
 **./PEC2.tex
 (PEC2.tex
@@ -798,9 +798,6 @@ LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line
 ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\ts1lmtt.fd"
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-
-LaTeX Warning: Reference `fig:volcanos' on page 9 undefined on input line 312.
-
 <figures/volcanoEvsN1.png, id=108, 433.62pt x 433.62pt>
 File: figures/volcanoEvsN1.png Graphic file (type png)
 <use figures/volcanoEvsN1.png>
@@ -857,7 +854,7 @@ line 364.
                                                   \fi \fi 
 l.370 
        <./PEC2_files/figure-latex/cnetplot-1.pdf>]
-Overfull \hbox (68.10612pt too wide) in paragraph at lines 399--409
+Overfull \hbox (93.93979pt too wide) in paragraph at lines 399--409
  [][] 
  []
 
@@ -865,7 +862,7 @@ Overfull \hbox (68.10612pt too wide) in paragraph at lines 399--409
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (68.10612pt too wide) in paragraph at lines 414--424
+Overfull \hbox (151.55132pt too wide) in paragraph at lines 414--424
  [][] 
  []
 
@@ -873,7 +870,7 @@ Overfull \hbox (68.10612pt too wide) in paragraph at lines 414--424
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (96.16196pt too wide) in paragraph at lines 429--439
+Overfull \hbox (126.68916pt too wide) in paragraph at lines 429--439
  [][] 
  []
 
@@ -919,11 +916,11 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 15698 strings out of 481556
- 230702 string characters out of 2923627
+ 15700 strings out of 481556
+ 230724 string characters out of 2923627
  541565 words of memory out of 3000000
  30462 multiletter control sequences out of 15000+200000
- 592399 words of font info for 108 fonts, out of 3000000 for 9000
+ 592482 words of font info for 109 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,9n,42p,981b,474s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Program Files/
@@ -933,7 +930,7 @@ MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}<C:/Program Files/MiKTeX 2.9/fonts/type
 Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/f
 onts/type1/public/lm/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
 lm/lmri10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb>
-Output written on PEC2.pdf (15 pages, 398357 bytes).
+Output written on PEC2.pdf (15 pages, 434409 bytes).
 PDF statistics:
  280 PDF objects out of 1000 (max. 8388607)
  69 named destinations out of 1000 (max. 500000)

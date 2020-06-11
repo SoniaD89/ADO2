@@ -531,7 +531,7 @@ mapped_genes <- union(mapped_genes2GO , mapper_enseml)
 
 
 ```{r EnrichmentAnalysis, include=FALSE}
-#pvaluecutoff de 0.1 para tener más de un gen en todas las comparaciones
+#pvaluecutoff aumentado para tener más de un gen en todas las comparaciones
 listOfData <- listOfSelected[1:3]
 comparisonsNames <- names(listOfData)
 universe <- mapped_genes
@@ -544,7 +544,7 @@ for (i in 1:length(listOfData)){
                 OrgDb         = org.Hs.eg.db,
                 ont           = "CC",
                 pAdjustMethod = "BH",
-                pvalueCutoff  = 0.15,
+                pvalueCutoff  = 0.2,
         readable      = TRUE)
   cat("##################################")
   cat("\nComparison: ", comparison,"\n")
