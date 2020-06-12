@@ -108,7 +108,7 @@ counts <- read.csv(file=m.file, sep = ";", row.names = "X")
 ```
 
 
-El archivo `r params$file1` contiene la información de las muestras de un estudio obtenido del repositorio (GTEx1). Este repositorio contiene datos de múltiples tipos en un total de 54 tejidos. Nosotros nos centraremos en los datos de expresión (RNA-seq) pertenecientes a un análisis del tiroides en donde se compara tres tipos de infiltración medido en un total de `r nrow(targets)`muestras pertenecientes a tres grupos:
+El archivo `r params$file1` contiene la información de las muestras de un estudio obtenido del repositorio (GTEx1). Este repositorio contiene datos de múltiples tipos en un total de 54 tejidos. Nosotros nos centraremos en los datos de expresión (RNA-seq) pertenecientes a un análisis del tiroides en donde se compara tres tipos de infiltración medido en un total de `r nrow(targets)` muestras pertenecientes a tres grupos:
 
 
 • Not infiltrated tissues (NIT)
@@ -123,7 +123,7 @@ Al desconocer los detalles del estudio de referencia, a la hora de elegir umbral
 
 # Métodos
 
-Para el informe se han utilizado los archivos `r params$file1` y `r params$file2`. De entre las `r nrow(targets)`muestras, se han seleccionado las 30 muestras solicitadas por el enunciado, 10 de cada tipo. Se realizarán tres comparaciones, ELI vs NIT (EvsN), ELI vs SFI (EvsS) y SFI vs NIT (SvsN).
+Para el informe se han utilizado los archivos `r params$file1` y `r params$file2`. De entre las `r nrow(targets)` muestras, se han seleccionado las 30 muestras solicitadas por el enunciado, 10 de cada tipo. Se realizarán tres comparaciones, ELI vs NIT (EvsN), ELI vs SFI (EvsS) y SFI vs NIT (SvsN).
 
 
 
@@ -333,13 +333,29 @@ summary(ressn)
 #table(res.05$padj < 0.05)
 ```
 
-# Plot de conteo
+## Plot de conteo
 
 En el gráfico \@ref(fig:plotcounts) se observan los conteos del objeto DESeqDataSet para cada uno de los tipos de infiltración. Se incluyen los genes de la comparación EvsN:
 
 ```{r countsave, fig.align='center', fig.height=4, fig.width=5, message=FALSE, include=FALSE}
 png("figures/counts.png")
 topGene <- rownames(resen)[which.min(resen$padj)] #Sólo se realiza con resen al no variar las conclusiones que se pueden obtener con reses y ressn
+library("ggbeeswarm")
+geneCounts <- plotCounts(dds, gene = topGene, intgroup = c("Group","molecular_data_type"),
+                         returnData = TRUE)
+ggplot(geneCounts, aes(x = Group, y = count, color = Group, group = molecular_data_type)) +
+  scale_y_log10() + geom_point(size = 3) + geom_line()
+dev.off()
+png("figures/countses.png")
+topGene <- rownames(reses)[which.min(reses$padj)] #Sólo se realiza con resen al no variar las conclusiones que se pueden obtener con reses y ressn
+library("ggbeeswarm")
+geneCounts <- plotCounts(dds, gene = topGene, intgroup = c("Group","molecular_data_type"),
+                         returnData = TRUE)
+ggplot(geneCounts, aes(x = Group, y = count, color = Group, group = molecular_data_type)) +
+  scale_y_log10() + geom_point(size = 3) + geom_line()
+dev.off()
+png("figures/countssn.png")
+topGene <- rownames(ressn)[which.min(ressn$padj)] #Sólo se realiza con resen al no variar las conclusiones que se pueden obtener con reses y ressn
 library("ggbeeswarm")
 geneCounts <- plotCounts(dds, gene = topGene, intgroup = c("Group","molecular_data_type"),
                          returnData = TRUE)
@@ -367,7 +383,7 @@ dev.off()
 
 ## Anotación de los resultados
 
-Se añaden las anotaciones de ENTREZID, GO y SYMBOL correspondientes a las anotaciones ENSEMBL ya presentes en los datos. Para ello se utiliza la función `mapIDs`del paquete `AnnotationDbi`, y el paquete de anotación `org.Hs.eg.db`. 
+Se añaden las anotaciones de ENTREZID, GO y SYMBOL correspondientes a las anotaciones ENSEMBL ya presentes en los datos. Para ello se utiliza la función `mapIDs` del paquete `AnnotationDbi`, y el paquete de anotación `org.Hs.eg.db`. 
 
 ```{r message=FALSE, include=FALSE}
 library("AnnotationDbi")
@@ -481,7 +497,7 @@ dev.off()
 ```
 
 
-Por último, para ayudar a interpretar la importancia biológica de los resultados del experimento, se realizó un test `enrichgo` (`Gene  Enrichment Analysis`) mediante el paquete `clusterProfiler` [@clusterprofiler] .  Para representar los resultados de este test, se han utilizado diagramas de barras mediante la función `barplot`, un diagrama en forma de red especificando qué genes son los que actúan mediante la función `cnetplot` y un gráfico `emapplot`.  Se han calculado los resultados para las ontologías `BP`(Biological Process), `CC`(Cellular Component) y `MF` (Molecular Function), para tener una visión más general de la importancia biológica de los resultados.  El criterio de selección de genes diferencialmente expresados ha sido un p-valor ajustado menor de 0.05. Se seleccionan todos los genes que tienen al menos una anotación en la base de datos GO.
+Por último, para ayudar a interpretar la importancia biológica de los resultados del experimento, se realizó un test `enrichgo` (`Gene Enrichment Analysis`) mediante el paquete `clusterProfiler` [@clusterprofiler] .  Para representar los resultados de este test, se han utilizado diagramas de barras mediante la función `barplot`, un diagrama en forma de red especificando qué genes son los que actúan mediante la función `cnetplot` y un gráfico `emapplot`.  Se han calculado los resultados para las ontologías `BP`(Biological Process), `CC`(Cellular Component) y `MF` (Molecular Function), para tener una visión más general de la importancia biológica de los resultados.  El criterio de selección de genes ha sido un p-valor ajustado menor de 0.05. Se seleccionan todos los genes que tienen al menos una anotación en la base de datos GO.
 
 
 ```{r}
@@ -656,7 +672,7 @@ cat("##################################")
 ```
 
 
-Las figuras resultantes de los análisis han sido guardadas en archivos .png y .pdf por si esta información fuese útil para este u otros estudios. 
+Las figuras resultantes de los análisis han sido guardadas en archivos .png y .pdf por si esta información fuese útil para este u otros estudios. Se puede acceder a ellas desde el repositorio de Github.
 
 # Resultados
 
@@ -690,20 +706,20 @@ Los genes selecionados para este análisis en cada una de las comparaciones son:
 sapply(listOfSelected, length)
 ```
  
-Como la pregunta del estudio no está clara, sólo se muestran aquí los gráficos que a criterio técnico son más fácilmente interpretables.  resultados del análisis realizado con enrichGO para procesos biológicos (Figuras \@ref(fig:cnetplot) y \@ref(fig:emapplot) ):
+Para limitar la extensión del informe, sólo se muestran aquí los gráficos que a criterio técnico son más fácilmente interpretables. Las figuras correspondientes cada una de las tres comparaciones se han guardado en el repositorio de Github. A continuación se muestran resultados del análisis realizado con enrichGO para funciones moleculares (Figuras \@ref(fig:cnetplot) y \@ref(fig:emapplot) ):
 
-```{r cnetplot, fig.cap="Network obtenida mediante el análisis enrichGO en la lista obtenida de la comparación entre UvsP1 y UvsP4"}
+```{r cnetplot, fig.cap="Network obtenida mediante el análisis enrichGO para funciones moleculares entre las comparaciones para funciones moleculares entre las comparacines EvsN, EvsS y SvsN"}
 cnetplot(ego3, categorySize = "geneNum", schowCategory = 15, 
          vertex.label.cex = 0.55)
 ```
 
-```{r emapplot, fig.cap="'Enrichment Map' mediante el análisis enrichGO en la lista obtenida de la comparación entre UvsP1 y UvsP4"}
+```{r emapplot, fig.cap="'Enrichment Map' mediante el análisis enrichGO para funciones moleculares entre las comparaciones EvsN, EvsS y SvsN"}
 emapplot(ego3, cex.label=0.4)
 ```
 
-# Sumario de resultados
+## Sumario de resultados
 
-```{r}
+```{r include=FALSE}
 Tab.react1 <- read.csv2(file.path("./results/BPenrichGO.Results.EvsN.csv"), 
                        sep = ",", header = TRUE, row.names = 1)
 ```
@@ -715,14 +731,15 @@ Tab.react2 <- read.csv2(file.path("./results/BPenrichGO.Results.EvsS.csv"),
 Tab.react3 <- read.csv2(file.path("./results/BPenrichGO.Results.SvsN.csv"), 
                        sep = ",", header = TRUE, row.names = 1)
 ```
-```{r}
+```{r include=FALSE}
 nrow(Tab.react1)
 nrow(Tab.react2)
 nrow(Tab.react3)
 ```
 
-Para la comparación EvsN, se han encontrado `r nrow(Tab.react1)` procesos biológicos mediante el análisis de "enrichGO", mientras que para EvsS se han encontrado `r nrow(Tab.react2)` y para SvsN `r nrow(Tab.react3)`. Es interesante observar que, aunque la diferencia en el número de procesos biológicos señalados por el análisis es notable entre las comparaciones, en las primeras posiciones comparten la activación de las células T y la regulación de la activación de los linfocitos. En cambio, sólo la comparación SvsN presenta en las primeras posiciones la activación y proliferación de células B (Cuadros 1, 2 y 3).
-```{r}
+Para la comparación EvsN, se han encontrado `r nrow(Tab.react1)` procesos biológicos mediante el análisis de "enrichGO", mientras que para EvsS se han encontrado `r nrow(Tab.react2)` y para SvsN `r nrow(Tab.react3)`.  Nótese el elevado número de procesos encontrados en las comparaciones que contemplan ELI vs las que no lo contemplan. Es interesante observar que, aunque la diferencia en el número de procesos biológicos señalados por el análisis es notable entre las comparaciones, en las primeras posiciones de EvsN y EvsS se encuentran la activación de las células T y la regulación de la activación de los linfocitos. En cambio, sólo la comparación SvsN presenta en las primeras posiciones la activación y proliferación de células B (Cuadros 1, 2 y 3).
+
+```{r include=FALSE}
 install.packages("kableExtra")
 ```
 
@@ -749,9 +766,9 @@ knitr::kable(Tab.react3, booktabs = TRUE, caption = "Primeras filas y columnas d
 
 ```
 
-# Comentarios
+# Discusión
 
-En el caso de que las infiltraciones NIT, SFI Y ELI fuesen pasos sucesivos dentro de un mismo proceso, los resultados parecen indicar que entre NIT y SFI se produce la proliferación de las células B, mientras que una vez llegados a un estado ELI hay activación de células T y  diferenciación de linfocitos. 
+En el caso de que las infiltraciones NIT, SFI Y ELI fuesen pasos sucesivos dentro de un mismo proceso, los resultados parecen indicar que entre NIT y SFI se produce la proliferación de las células B, mientras que una vez llegados a un estado ELI (o en algún momento entre SFI y ELI) hay activación de células T y  diferenciación de linfocitos. 
 
 Se recomienda aumentar el número de muestras ELI.
 
